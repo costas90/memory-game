@@ -5,7 +5,7 @@ html, body {
   height: 100%;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, ul {
   margin: 0;
   padding: 0;
 }
@@ -22,7 +22,25 @@ body {
 
 ul {
   list-style: none;
-  margin: auto;
   display: flex;
   flex-flow: row wrap;
+}
+
+.card {
+  min-width: 24%;
+  min-height: 80px;
+  /* background-color: blue; */
+  margin: 1px;
+}
+
+.card div {
+  padding-bottom:100%;
+  background:#EEE;
+  height:0;
+  position:relative;
+}
+
+img {
+  display: none;
+  width: 100%;
 }

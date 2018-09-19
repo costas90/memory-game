@@ -13,8 +13,11 @@ let iconNum = 0;
 const cardGrid = document.querySelector('.card-grid ul')
 
 for (let i=1; i <= 16; i++) {
-  const card = document.createElement('li');
+  const li = document.createElement('li');
+  const cardDiv = document.createElement('div')
   const icon = document.createElement('img');
+
+  li.classList.add('card');
 
   if (i < 9) {
     icon.src = icons[iconNum];
@@ -27,6 +30,7 @@ for (let i=1; i <= 16; i++) {
     icon.src = icons[iconNum];
   }
 
-  cardGrid.appendChild(card);
-  card.appendChild(icon);
+  cardGrid.appendChild(li);
+  li.appendChild(cardDiv);
+  cardDiv.appendChild(icon);
 }
