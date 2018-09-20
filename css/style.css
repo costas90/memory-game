@@ -41,6 +41,9 @@ ul {
 }
 
 img {
-  display: none;
   width: 100%;
+}
+
+.hide {
+  display: none;
 }
