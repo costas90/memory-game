@@ -7,7 +7,7 @@ let icons = [
   'img\/Saw.png',
   'img\/Screw_bolts.png',
   'img\/Sliding_scale.png'
-]
+];
 
 // .
 // .
@@ -17,8 +17,10 @@ let icons = [
 // .
 // .
 
+const cards = [];
+const cardsRevealed = [];
 let iconsI = 0;
-const cardGrid = document.querySelector('.card-grid ul')
+const cardGrid = document.querySelector('.card-grid ul');
 
 for (let i=1; i <= 16; i++) {
   const li = document.createElement('li');
@@ -42,18 +44,17 @@ for (let i=1; i <= 16; i++) {
   cardGrid.appendChild(li);
   li.appendChild(div);
   div.appendChild(img);
-}
+};
 
 // .
 // .
 // .
-// SHOW CARD ON CLICK AND SAVE IN AN ARRAY
+// CARD FUNCTIONS
 // .
 // .
 // .
 
-const cardsRevealed = [];
-const cards = document.querySelectorAll('.card');
+const hiddenCards = document.querySelectorAll('.card');
 
 function revealCard(card) {
   console.log(`click on ${card}`);
@@ -68,19 +69,50 @@ function saveCardRevealed(click) {
   cardsRevealed.push(click.getAttribute('src'));
 };
 
-function checkRevealedCards() {
-  if (cardsRevealed.length == 2) {
-    if (cardsRevealed[0] == cardsRevealed[1]) {
-      console.log(`match`);
-    }
+function markPaired() {
+  const revealedCards = document.querySelectorAll('.revealed');
+  for (let card of revealedCards) {
+    card.classList.remove('revealed');
+    card.classList.add('paired');
   }
 };
 
-for (let card of cards) {
-  let cardClicked = card.querySelector('.card div img');
+function hideRevealedCards() {
+  const revealedCards = document.querySelectorAll('.revealed');
+  for (let card of revealedCards) {
+    card.classList.remove('revealed');
+    card.classList.add('hide');
+  };
+};
 
+function checkRevealedCards() {
+  if (cardsRevealed.length == 2) {
+    if (cardsRevealed[0] == cardsRevealed[1]) {
+      markPaired();
+      console.log(`match`);
+    } else {
+      setTimeout(hideRevealedCards, 300);
+      console.log(`hide cards`);
+    }
+    cardsRevealed.length = 0;
+  }
+};
+
+// .
+// .
+// .
+// EVENTS
+// .
+// .
+// .
+
+for (let card of hiddenCards) {
+  let cardClicked = card.querySelector('.card div img');
   card.addEventListener('click', function () {
     revealCard(card);
+    if (cardClicked.className === "revealed") {
+      return;
+    }
     saveCardRevealed(cardClicked);
     console.log(cardsRevealed);
     checkRevealedCards();
