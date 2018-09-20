@@ -17,31 +17,31 @@ let icons = [
 // .
 // .
 
-let iconNum = 0;
+let iconsI = 0;
 const cardGrid = document.querySelector('.card-grid ul')
 
 for (let i=1; i <= 16; i++) {
   const li = document.createElement('li');
   const div = document.createElement('div')
-  const icon = document.createElement('img');
+  const img = document.createElement('img');
 
   li.classList.add('card');
-  icon.classList.add('hide');
+  img.classList.add('hide');
 
   if (i < 9) {
-    icon.src = icons[iconNum];
-    iconNum += 1;
+    img.src = icons[iconsI];
+    iconsI += 1;
   } else if (i == 9) {
-    iconNum = 0;
-    icon.src = icons[iconNum];
+    iconsI = 0;
+    img.src = icons[iconsI];
   } else {
-    iconNum += 1;
-    icon.src = icons[iconNum];
+    iconsI += 1;
+    img.src = icons[iconsI];
   }
 
   cardGrid.appendChild(li);
   li.appendChild(div);
-  div.appendChild(icon);
+  div.appendChild(img);
 }
 
 // .
@@ -52,22 +52,37 @@ for (let i=1; i <= 16; i++) {
 // .
 // .
 
-const cards = document.querySelectorAll('.card');
 const cardsRevealed = [];
+const cards = document.querySelectorAll('.card');
 
-let showIcon = function(card) {
+function revealCard(card) {
   console.log(`click on ${card}`);
   console.log(card.querySelector('.hide'));
 
   let cardClicked = card.querySelector('.card div img');
   cardClicked.classList.remove('hide');
+  cardClicked.classList.add('revealed');
+};
+
+function saveCardRevealed(click) {
+  cardsRevealed.push(click.getAttribute('src'));
+};
+
+function checkRevealedCards() {
+  if (cardsRevealed.length == 2) {
+    if (cardsRevealed[0] == cardsRevealed[1]) {
+      console.log(`match`);
+    }
+  }
 };
 
 for (let card of cards) {
-  card.addEventListener('click', function () {
-    showIcon(card);
-    cardsRevealed.push(card.querySelector('.card div img').getAttribute('src'));
-    console.log(cardsRevealed);
-  });
+  let cardClicked = card.querySelector('.card div img');
 
+  card.addEventListener('click', function () {
+    revealCard(card);
+    saveCardRevealed(cardClicked);
+    console.log(cardsRevealed);
+    checkRevealedCards();
+  });
 }
