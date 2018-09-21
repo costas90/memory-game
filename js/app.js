@@ -11,50 +11,44 @@ let icons = [
 
 // .
 // .
-// .
 // CREATE 16 CARDS
-// .
 // .
 // .
 
 const cards = [];
 const cardsRevealed = [];
-const cardGrid = document.querySelector('.card-grid ul');
-let iconsI = 0;
 
-for (let i=1; i <= 16; i++) {
-  const li = document.createElement('li');
-  const div = document.createElement('div')
-  const img = document.createElement('img');
+const t0 = performance.now();
 
-  li.classList.add('card');
-  img.classList.add('hide');
-  img.classList.add('card-icon');
+const cardGrid = document.querySelector('.card-grid');
+const ul = document.createElement('ul');
 
-  if (i < 9) {
-    img.src = icons[iconsI];
-    iconsI += 1;
-  } else if (i == 9) {
-    iconsI = 0;
-    img.src = icons[iconsI];
-  } else {
-    iconsI += 1;
-    img.src = icons[iconsI];
-  }
+for (let y = 0; y < 2; y++) {
+  for (let i = 0; i < icons.length; i++) {
+    const li = document.createElement('li');
+    const div = document.createElement('div')
+    const img = document.createElement('img');
 
-  cardGrid.appendChild(li);
-  li.appendChild(div);
-  div.appendChild(img);
-};
+    li.classList.add('card');
+    img.classList.add('hide');
+    img.classList.add('card-icon');
+
+    img.src = icons[i];
+    cards.push(img.getAttribute('src'));
+
+    ul.appendChild(li);
+    li.appendChild(div);
+    div.appendChild(img);
+  };
+}
+cardGrid.appendChild(ul);
+
+const t1 = performance.now();
+console.log(`Time: ${t1-t0}`);
 
 const hiddenCards = document.querySelectorAll('.card');
-// Build array with all cards before shuffle
-for (card of hiddenCards) {
-  const findIcon = card.querySelector('.card-icon');
-  cards.push(findIcon.getAttribute('src'));
-}
 
-shuffle(cards);
+// shuffle(cards);
 
 // .
 // .
