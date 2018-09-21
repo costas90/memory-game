@@ -29,8 +29,8 @@ shuffle(cards);
 
 const t0 = performance.now();
 
-const cardGrid = document.querySelector('.card-grid');
-const ul = document.createElement('ul');
+const cardGrid = document.querySelector('.card-grid ul');
+const fragment = document.createDocumentFragment();
 
 // Create HTML Elements for cards from Card Array
 for (let i = 0; i < cards.length; i++) {
@@ -44,12 +44,12 @@ for (let i = 0; i < cards.length; i++) {
 
   img.src = cards[i];
 
-  ul.appendChild(li);
+  fragment.appendChild(li);
   li.appendChild(div);
   div.appendChild(img);
 };
 
-cardGrid.appendChild(ul);
+cardGrid.appendChild(fragment);
 
 const t1 = performance.now();
 console.log(`Time: ${t1-t0}`);
@@ -89,6 +89,19 @@ function saveCardRevealed(click) {
   cardsRevealed.push(click.getAttribute('src'));
 };
 
+function checkRevealedCards() {
+  if (cardsRevealed.length == 2) {
+    if (cardsRevealed[0] == cardsRevealed[1]) {
+      markPaired();
+      console.log(`match`);
+    } else {
+      setTimeout(hideRevealedCards, 300);
+      console.log(`hide cards`);
+    }
+    cardsRevealed.length = 0;
+  }
+};
+
 function markPaired() {
   const revealedCards = document.querySelectorAll('.revealed');
   for (let card of revealedCards) {
@@ -105,24 +118,11 @@ function hideRevealedCards() {
   };
 };
 
-function checkRevealedCards() {
-  if (cardsRevealed.length == 2) {
-    if (cardsRevealed[0] == cardsRevealed[1]) {
-      markPaired();
-      console.log(`match`);
-    } else {
-      setTimeout(hideRevealedCards, 300);
-      console.log(`hide cards`);
-    }
-    cardsRevealed.length = 0;
-  }
-};
-
 //
 //
 // EVENTS
 //
-// 
+//
 
 for (let card of hiddenCards) {
   let cardClicked = card.querySelector('.card-icon');
