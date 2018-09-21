@@ -5,12 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/style.css">
-  <title>Document</title>
+  <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  <title>Memory Game</title>
 </head>
 <body>
-  <h1 class="title">Memory Game</h1>
+  <header class="title">
+    <h1>Memory Game</h1>
+  </header>
   <div class="container">
-    <div class="stats"></div>
+    <section class="score-panel">
+      <ul>
+        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+      </ul>
+      <p><span class="moves">3</span> Moves</p>
+      <div class="restart">
+        <i class="fa fa-repeat"></i>
+      </div>
+    </section>
     <div class="card-grid">
       <ul></ul>
     </div>

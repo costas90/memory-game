@@ -122,6 +122,7 @@ function checkWin() {
   const pairedCards = document.querySelectorAll('.paired');
   if (pairedCards.length === cards.length) {
     console.log('Game Won');
+    
   }
 }
 

@@ -5,7 +5,7 @@ html, body {
   height: 100%;
 }
 
-h1, h2, h3, h4, h5, ul {
+h1, h2, h3, h4, h5, ul, p {
   margin: 0;
   padding: 0;
 }
@@ -15,22 +15,56 @@ body {
   flex-direction: column;
 }
 
+ul {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+}
+
+/*
+*
+* HEADER
+*
+*/
+
 .title {
   margin-left: auto;
   margin-right: auto;
 }
 
-ul {
-  list-style: none;
+/*
+*
+* Score Panel
+*
+*/
+
+.score-panel {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
 }
 
-.card {
-  min-width: 24%;
-  min-height: 80px;
-  /* background-color: blue; */
-  margin: 1px;
+.score-panel ul, .score-panel p {
+  display: flex;
+  margin-left: 10px;
+}
+
+.score-panel div {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+/*
+*
+* Card Grid
+*
+*/
+
+.card-grid ul {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 .card div {
@@ -40,13 +74,22 @@ ul {
   position:relative;
 }
 
-img {
-  width: 100%;
+.card {
+  min-width: 24%;
+  min-height: 80px;
+  /* background-color: blue; */
+  margin: 1px;
 }
 
 .hide {
   display: none;
 }
+
+/*
+*
+* Break Points
+*
+*/
 
 @media screen and (min-width: 700px) {
   .container {
