@@ -17,6 +17,8 @@ let icons = [
 
 const cards = [];
 const cardsRevealed = [];
+const stars = document.querySelectorAll('.stars li i');
+let moves = 0;
 
 // Add icons to Cards Array
 for (let y = 0; y < 2; y++) {
@@ -109,9 +111,11 @@ function checkRevealedCards() {
   if (cardsRevealed.length == 2) {
     if (cardsRevealed[0] == cardsRevealed[1]) {
       markPaired();
+      moves +=1;
       console.log(`match`);
     } else {
       setTimeout(hideRevealedCards, 300);
+      moves +=1;
       console.log(`hide cards`);
     }
     cardsRevealed.length = 0;
@@ -119,9 +123,19 @@ function checkRevealedCards() {
 };
 
 function movesCount() {
-  const pairedCards = document.querySelectorAll('.paired');
   const movesNum = document.querySelector('.moves');
-  movesNum.textContent = `${pairedCards.length / 2} Moves`;
+  movesNum.textContent = `${moves} Moves`;
+
+  if (moves === 10) {
+    stars[2].classList.remove('fa-star');
+    stars[2].classList.add('fa-star-o');
+  } else if (moves === 15) {
+    stars[1].classList.remove('fa-star');
+    stars[1].classList.add('fa-star-o');
+  } else if (moves === 20) {
+    stars[0].classList.remove('fa-star');
+    stars[0].classList.add('fa-star-o');
+  }
 }
 
 function checkWin() {
