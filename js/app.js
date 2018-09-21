@@ -19,8 +19,8 @@ let icons = [
 
 const cards = [];
 const cardsRevealed = [];
-let iconsI = 0;
 const cardGrid = document.querySelector('.card-grid ul');
+let iconsI = 0;
 
 for (let i=1; i <= 16; i++) {
   const li = document.createElement('li');
@@ -29,6 +29,7 @@ for (let i=1; i <= 16; i++) {
 
   li.classList.add('card');
   img.classList.add('hide');
+  img.classList.add('card-icon');
 
   if (i < 9) {
     img.src = icons[iconsI];
@@ -46,6 +47,15 @@ for (let i=1; i <= 16; i++) {
   div.appendChild(img);
 };
 
+const hiddenCards = document.querySelectorAll('.card');
+// Build array with all cards before shuffle
+for (card of hiddenCards) {
+  const findIcon = card.querySelector('.card-icon');
+  cards.push(findIcon.getAttribute('src'));
+}
+
+shuffle(cards);
+
 // .
 // .
 // .
@@ -54,13 +64,25 @@ for (let i=1; i <= 16; i++) {
 // .
 // .
 
-const hiddenCards = document.querySelectorAll('.card');
+function shuffle (array) {
+  let currentIndex = array.length, temporaryValue, randomIndex;
+
+  while (currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
 
 function revealCard(card) {
   console.log(`click on ${card}`);
   console.log(card.querySelector('.hide'));
 
-  let cardClicked = card.querySelector('.card div img');
+  let cardClicked = card.querySelector('.card-icon');
   cardClicked.classList.remove('hide');
   cardClicked.classList.add('revealed');
 };
@@ -107,12 +129,12 @@ function checkRevealedCards() {
 // .
 
 for (let card of hiddenCards) {
-  let cardClicked = card.querySelector('.card div img');
+  let cardClicked = card.querySelector('.card-icon');
   card.addEventListener('click', function () {
-    revealCard(card);
-    if (cardClicked.className === "revealed") {
+    if (cardClicked.classList.contains("revealed") || cardClicked.classList.contains("paired")) {
       return;
     }
+    revealCard(card);
     saveCardRevealed(cardClicked);
     console.log(cardsRevealed);
     checkRevealedCards();
