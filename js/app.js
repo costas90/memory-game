@@ -89,19 +89,6 @@ function saveCardRevealed(click) {
   cardsRevealed.push(click.getAttribute('src'));
 };
 
-function checkRevealedCards() {
-  if (cardsRevealed.length == 2) {
-    if (cardsRevealed[0] == cardsRevealed[1]) {
-      markPaired();
-      console.log(`match`);
-    } else {
-      setTimeout(hideRevealedCards, 300);
-      console.log(`hide cards`);
-    }
-    cardsRevealed.length = 0;
-  }
-};
-
 function markPaired() {
   const revealedCards = document.querySelectorAll('.revealed');
   for (let card of revealedCards) {
@@ -117,6 +104,26 @@ function hideRevealedCards() {
     card.classList.add('hide');
   };
 };
+
+function checkRevealedCards() {
+  if (cardsRevealed.length == 2) {
+    if (cardsRevealed[0] == cardsRevealed[1]) {
+      markPaired();
+      console.log(`match`);
+    } else {
+      setTimeout(hideRevealedCards, 300);
+      console.log(`hide cards`);
+    }
+    cardsRevealed.length = 0;
+  }
+};
+
+function checkWin() {
+  const pairedCards = document.querySelectorAll('.paired');
+  if (pairedCards.length === cards.length) {
+    console.log('Game Won');
+  }
+}
 
 //
 //
@@ -134,5 +141,6 @@ for (let card of hiddenCards) {
     saveCardRevealed(cardClicked);
     console.log(cardsRevealed);
     checkRevealedCards();
+    checkWin();
   });
 }
