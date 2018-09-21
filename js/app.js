@@ -9,38 +9,46 @@ let icons = [
   'img\/Sliding_scale.png'
 ];
 
-// .
-// .
+//
+//
 // CREATE 16 CARDS
-// .
-// .
+//
+//
 
 const cards = [];
 const cardsRevealed = [];
+
+// Add icons to Cards Array
+for (let y = 0; y < 2; y++) {
+  for (let x = 0; x < icons.length; x++) {
+    cards.push(icons[x]);
+  }
+}
+
+shuffle(cards);
 
 const t0 = performance.now();
 
 const cardGrid = document.querySelector('.card-grid');
 const ul = document.createElement('ul');
 
-for (let y = 0; y < 2; y++) {
-  for (let i = 0; i < icons.length; i++) {
-    const li = document.createElement('li');
-    const div = document.createElement('div')
-    const img = document.createElement('img');
+// Create HTML Elements for cards from Card Array
+for (let i = 0; i < cards.length; i++) {
+  const li = document.createElement('li');
+  const div = document.createElement('div')
+  const img = document.createElement('img');
 
-    li.classList.add('card');
-    img.classList.add('hide');
-    img.classList.add('card-icon');
+  li.classList.add('card');
+  img.classList.add('hide');
+  img.classList.add('card-icon');
 
-    img.src = icons[i];
-    cards.push(img.getAttribute('src'));
+  img.src = cards[i];
 
-    ul.appendChild(li);
-    li.appendChild(div);
-    div.appendChild(img);
-  };
-}
+  ul.appendChild(li);
+  li.appendChild(div);
+  div.appendChild(img);
+};
+
 cardGrid.appendChild(ul);
 
 const t1 = performance.now();
@@ -48,15 +56,11 @@ console.log(`Time: ${t1-t0}`);
 
 const hiddenCards = document.querySelectorAll('.card');
 
-// shuffle(cards);
-
-// .
-// .
-// .
+//
+//
 // CARD FUNCTIONS
-// .
-// .
-// .
+//
+//
 
 function shuffle (array) {
   let currentIndex = array.length, temporaryValue, randomIndex;
@@ -114,13 +118,11 @@ function checkRevealedCards() {
   }
 };
 
-// .
-// .
-// .
+//
+//
 // EVENTS
-// .
-// .
-// .
+//
+// 
 
 for (let card of hiddenCards) {
   let cardClicked = card.querySelector('.card-icon');
