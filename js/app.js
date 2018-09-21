@@ -118,11 +118,17 @@ function checkRevealedCards() {
   }
 };
 
+function movesCount() {
+  const pairedCards = document.querySelectorAll('.paired');
+  const movesNum = document.querySelector('.moves');
+  movesNum.textContent = `${pairedCards.length / 2} Moves`;
+}
+
 function checkWin() {
   const pairedCards = document.querySelectorAll('.paired');
   if (pairedCards.length === cards.length) {
     console.log('Game Won');
-    
+
   }
 }
 
@@ -142,6 +148,7 @@ for (let card of hiddenCards) {
     saveCardRevealed(cardClicked);
     console.log(cardsRevealed);
     checkRevealedCards();
+    movesCount();
     checkWin();
   });
 }

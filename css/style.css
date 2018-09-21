@@ -5,7 +5,7 @@ html, body {
   height: 100%;
 }
 
-h1, h2, h3, h4, h5, ul, p {
+h1, h2, h3, h4, h5, ul {
   margin: 0;
   padding: 0;
 }
@@ -43,9 +43,12 @@ img {
 .score-panel {
   display: flex;
   flex-flow: row nowrap;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.score-panel ul, .score-panel p {
+.score-panel ul, .score-panel span {
   display: flex;
   margin-left: 10px;
 }
