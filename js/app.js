@@ -13,6 +13,7 @@ const cardsRevealed = [];
 const stars = document.querySelectorAll('.stars li i');
 const cardGrid = document.querySelector('.card-grid ul');
 const fragment = document.createDocumentFragment();
+let starsCount = 3;
 let gameFinished = false;
 let moves = 0;
 let seconds = 0;
@@ -119,24 +120,47 @@ function movesCount() {
   if (moves === 10) {
     stars[2].classList.remove('fa-star');
     stars[2].classList.add('fa-star-o');
+    starsCount = 2;
   } else if (moves === 15) {
     stars[1].classList.remove('fa-star');
     stars[1].classList.add('fa-star-o');
+    starsCount = 1;
   } else if (moves === 20) {
     stars[0].classList.remove('fa-star');
     stars[0].classList.add('fa-star-o');
+    starsCount = 0;
   }
 }
 
 function checkWin() {
   const pairedCards = document.querySelectorAll('.paired');
   if (pairedCards.length === cards.length) {
-    console.log('Game Won');
     gameFinished = true;
+    setTimeout(showModal, 1000);
+    console.log('Game Won');
   }
 }
 
+function showModal() {
+  const body = document.querySelector('body');
+  body.innerHTML = `<section className="myModal">
+    <h1>Congratulations! You Won!</h1>
+    <p>With ${moves} Moves and ${starsCount} Stars in ${minutes}:${seconds} minutes.</p>
+    <button>Play Again!</button>
+  </section>`
+
+  const button = document.querySelector('button');
+  button.addEventListener('click', function() {
+    document.location.reload();
+  })
+}
+
+let interval = null;
+
 function count() {
+  if (gameFinished) {
+    clearInterval(interval);
+  }
   const timer = document.querySelector('.timer');
   timer.textContent = `${minutes}:${seconds}`;
   seconds +=1;
@@ -144,11 +168,10 @@ function count() {
     seconds = 0;
     minutes += 1;
   }
-  // console.log(`${minutes}:${seconds}`);
 }
 
 function timer(count) {
-  setInterval(count, 1000);
+  interval = setInterval(count, 1000);
   console.log(`timer starts`);
 }
 
