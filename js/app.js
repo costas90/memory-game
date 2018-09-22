@@ -18,7 +18,13 @@ let icons = [
 const cards = [];
 const cardsRevealed = [];
 const stars = document.querySelectorAll('.stars li i');
+const cardGrid = document.querySelector('.card-grid ul');
+const fragment = document.createDocumentFragment();
+const gameFinished = false;
 let moves = 0;
+let seconds = 0;
+let minutes = 0;
+let options = { once : true, capture : true};
 
 // Add icons to Cards Array
 for (let y = 0; y < 2; y++) {
@@ -28,11 +34,6 @@ for (let y = 0; y < 2; y++) {
 }
 
 shuffle(cards);
-
-const t0 = performance.now();
-
-const cardGrid = document.querySelector('.card-grid ul');
-const fragment = document.createDocumentFragment();
 
 // Create HTML Elements for cards from Card Array
 for (let i = 0; i < cards.length; i++) {
@@ -52,9 +53,6 @@ for (let i = 0; i < cards.length; i++) {
 };
 
 cardGrid.appendChild(fragment);
-
-const t1 = performance.now();
-console.log(`Time: ${t1-t0}`);
 
 const hiddenCards = document.querySelectorAll('.card');
 
@@ -142,8 +140,24 @@ function checkWin() {
   const pairedCards = document.querySelectorAll('.paired');
   if (pairedCards.length === cards.length) {
     console.log('Game Won');
-
+    gameFinished = true;
   }
+}
+
+function count() {
+  const timer = document.querySelector('.timer');
+  timer.textContent = `${minutes}:${seconds}`;
+  seconds +=1;
+  if (seconds == 60) {
+    seconds = 0;
+    minutes += 1;
+  }
+  // console.log(`${minutes}:${seconds}`);
+}
+
+function timer(count) {
+  setInterval(count, 1000);
+  console.log(`timer starts`);
 }
 
 //
@@ -166,3 +180,12 @@ for (let card of hiddenCards) {
     checkWin();
   });
 }
+
+cardGrid.addEventListener('click', function() {
+  timer(count);
+}, options);
+
+const restart = document.querySelector('.fa-repeat');
+restart.addEventListener('click', function() {
+  document.location.reload();
+});
