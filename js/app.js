@@ -8,24 +8,22 @@ let icons = [
   'img\/Screw_bolts.png',
   'img\/Sliding_scale.png'
 ];
+const cards = [];
+const cardsRevealed = [];
+const stars = document.querySelectorAll('.stars li i');
+const cardGrid = document.querySelector('.card-grid ul');
+const fragment = document.createDocumentFragment();
+let gameFinished = false;
+let moves = 0;
+let seconds = 0;
+let minutes = 0;
+let options = { once : true, capture : true};
 
 //
 //
 // CREATE 16 CARDS
 //
 //
-
-const cards = [];
-const cardsRevealed = [];
-const stars = document.querySelectorAll('.stars li i');
-const cardGrid = document.querySelector('.card-grid ul');
-const fragment = document.createDocumentFragment();
-const gameFinished = false;
-let moves = 0;
-let seconds = 0;
-let minutes = 0;
-let options = { once : true, capture : true};
-
 // Add icons to Cards Array
 for (let y = 0; y < 2; y++) {
   for (let x = 0; x < icons.length; x++) {
@@ -54,8 +52,6 @@ for (let i = 0; i < cards.length; i++) {
 
 cardGrid.appendChild(fragment);
 
-const hiddenCards = document.querySelectorAll('.card');
-
 //
 //
 // CARD FUNCTIONS
@@ -76,17 +72,15 @@ function shuffle (array) {
   return array;
 }
 
-function revealCard(card) {
-  console.log(`click on ${card}`);
-  console.log(card.querySelector('.hide'));
-
-  let cardClicked = card.querySelector('.card-icon');
+function revealCard(el) {
+  let cardClicked = el.querySelector('.card-icon');
   cardClicked.classList.remove('hide');
   cardClicked.classList.add('revealed');
 };
 
-function saveCardRevealed(click) {
-  cardsRevealed.push(click.getAttribute('src'));
+function saveCardRevealed(el) {
+  let cardClicked = el.querySelector('.card-icon');
+  cardsRevealed.push(cardClicked.getAttribute('src'));
 };
 
 function markPaired() {
@@ -110,11 +104,9 @@ function checkRevealedCards() {
     if (cardsRevealed[0] == cardsRevealed[1]) {
       markPaired();
       moves +=1;
-      console.log(`match`);
     } else {
       setTimeout(hideRevealedCards, 300);
       moves +=1;
-      console.log(`hide cards`);
     }
     cardsRevealed.length = 0;
   }
@@ -166,20 +158,17 @@ function timer(count) {
 //
 //
 
-for (let card of hiddenCards) {
-  let cardClicked = card.querySelector('.card-icon');
-  card.addEventListener('click', function () {
-    if (cardClicked.classList.contains("revealed") || cardClicked.classList.contains("paired")) {
-      return;
-    }
-    revealCard(card);
-    saveCardRevealed(cardClicked);
-    console.log(cardsRevealed);
-    checkRevealedCards();
-    movesCount();
-    checkWin();
-  });
-}
+cardGrid.addEventListener('click', function(event) {
+  if (event.target.classList.contains("revealed") || event.target.classList.contains("paired")) {
+    return;
+  }
+  revealCard(event.target);
+  saveCardRevealed(event.target);
+  console.log(cardsRevealed);
+  checkRevealedCards();
+  movesCount();
+  checkWin();
+});
 
 cardGrid.addEventListener('click', function() {
   timer(count);
