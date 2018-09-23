@@ -42,8 +42,7 @@ for (let i = 0; i < cards.length; i++) {
   const img = document.createElement('img');
 
   li.classList.add('card');
-  img.classList.add('hide');
-  img.classList.add('card-icon');
+  img.classList.add('hide', 'card-icon');
 
   img.src = cards[i];
 
@@ -78,6 +77,7 @@ function revealCard(el) {
   let cardClicked = el.querySelector('.card-icon');
   cardClicked.classList.remove('hide');
   cardClicked.classList.add('revealed');
+  cardClicked.parentElement.classList.add('flip');
 };
 
 function saveCardRevealed(el) {
@@ -100,7 +100,7 @@ function hideRevealedCards() {
   for (let card of revealedCards) {
     card.classList.remove('revealed');
     card.classList.add('hide');
-    card.parentElement.classList.remove('wrongMove');
+    card.parentElement.classList.remove('flip', 'wrongMove');
   };
 };
 
@@ -111,7 +111,7 @@ function checkRevealedCards() {
       moves +=1;
     } else {
       wrongMove();
-      setTimeout(hideRevealedCards, 300);
+      setTimeout(hideRevealedCards, 400);
       moves +=1;
     }
     cardsRevealed.length = 0;
