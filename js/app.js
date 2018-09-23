@@ -14,6 +14,7 @@ const cardsSelected = [];
 const stars = document.querySelectorAll('.stars li i');
 const cardGrid = document.querySelector('.card-grid ul');
 const fragment = document.createDocumentFragment();
+let interval = null;
 let starsCount = 3;
 let gameFinished = false;
 let moves = 0;
@@ -150,15 +151,21 @@ function checkWin() {
   const pairedCards = document.querySelectorAll('.paired');
   if (pairedCards.length === cards.length) {
     gameFinished = true;
+    clearInterval(interval);
     setTimeout(showModal, 1000);
   }
 }
-
 function showModal() {
+  let message;
+  if (minutes === 0) {
+    message = `${seconds} seconds`;
+  } else {
+    message = `${minutes}:${seconds} minutes`
+  }
   const body = document.querySelector('body');
   body.innerHTML = `<section class ="myModal">
     <h1>Congratulations! You Won!</h1>
-    <p>With ${moves} Moves and ${starsCount} Stars in ${minutes}:${seconds} minutes.</p>
+    <p>With ${moves} Moves and ${starsCount} Stars in ${message}.</p>
     <button>Play Again!</button>
   </section>`
 
@@ -168,12 +175,7 @@ function showModal() {
   })
 }
 
-let interval = null;
-
 function count() {
-  if (gameFinished) {
-    clearInterval(interval);
-  }
   const timer = document.querySelector('.timer');
   timer.textContent = `${minutes}:${seconds}`;
   seconds +=1;
@@ -206,7 +208,7 @@ cardGrid.addEventListener('click', function(event) {
 });
 
 cardGrid.addEventListener('click', function() {
-  timer(count);
+  interval = setInterval(count, 1000);
 }, options);
 
 const restart = document.querySelector('.fa-repeat');
