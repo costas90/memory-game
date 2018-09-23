@@ -35,6 +35,7 @@ img {
   width: 100%;
   position: absolute;
   padding: 15px;
+  border-radius: 10px;
 }
 
 /*
@@ -106,6 +107,14 @@ img {
 
 .hide {
   display: none;
+}
+
+.paired {
+  background: #8dca8d !important;
+}
+
+.wrongMove {
+  background: red !important;
 }
 
 /*

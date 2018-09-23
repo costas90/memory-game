@@ -10,6 +10,7 @@ let icons = [
 ];
 const cards = [];
 const cardsRevealed = [];
+const cardsSelected = [];
 const stars = document.querySelectorAll('.stars li i');
 const cardGrid = document.querySelector('.card-grid ul');
 const fragment = document.createDocumentFragment();
@@ -82,6 +83,8 @@ function revealCard(el) {
 function saveCardRevealed(el) {
   let cardClicked = el.querySelector('.card-icon');
   cardsRevealed.push(cardClicked.getAttribute('src'));
+  cardsSelected.push(cardClicked);
+  cardsSelected[0].setAttribute('style', 'background: #6aa5da');
 };
 
 function markPaired() {
@@ -97,6 +100,7 @@ function hideRevealedCards() {
   for (let card of revealedCards) {
     card.classList.remove('revealed');
     card.classList.add('hide');
+    card.parentElement.classList.remove('wrongMove');
   };
 };
 
@@ -106,12 +110,22 @@ function checkRevealedCards() {
       markPaired();
       moves +=1;
     } else {
+      wrongMove();
       setTimeout(hideRevealedCards, 300);
       moves +=1;
     }
     cardsRevealed.length = 0;
+    cardsSelected.length = 0;
   }
 };
+
+function wrongMove() {
+  cardsSelected[0].removeAttribute('style', 'background: #6aa5da');
+  const revealedCards = document.querySelectorAll('.revealed');
+  for (let card of revealedCards) {
+    card.parentElement.classList.add('wrongMove');
+  }
+}
 
 function movesCount() {
   const movesNum = document.querySelector('.moves');
@@ -137,13 +151,12 @@ function checkWin() {
   if (pairedCards.length === cards.length) {
     gameFinished = true;
     setTimeout(showModal, 1000);
-    console.log('Game Won');
   }
 }
 
 function showModal() {
   const body = document.querySelector('body');
-  body.innerHTML = `<section className="myModal">
+  body.innerHTML = `<section class ="myModal">
     <h1>Congratulations! You Won!</h1>
     <p>With ${moves} Moves and ${starsCount} Stars in ${minutes}:${seconds} minutes.</p>
     <button>Play Again!</button>
@@ -172,7 +185,6 @@ function count() {
 
 function timer(count) {
   interval = setInterval(count, 1000);
-  console.log(`timer starts`);
 }
 
 //
