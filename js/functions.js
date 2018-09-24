@@ -75,20 +75,15 @@ function movesCount() {
   movesNum.textContent = `${moves} Moves`;
 
   switch (moves) {
-    case 10:
+    case 15:
       stars[2].classList.remove('fa-star');
       stars[2].classList.add('fa-star-o');
       starsCount = 2;
       break;
-    case 15:
+    case 20:
       stars[1].classList.remove('fa-star');
       stars[1].classList.add('fa-star-o');
       starsCount = 1;
-      break;
-    case 20:
-      stars[0].classList.remove('fa-star');
-      stars[0].classList.add('fa-star-o');
-      starsCount = 0;
   }
 }
 
