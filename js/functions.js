@@ -1,9 +1,10 @@
 //
+//  CARD FUNCTIONS
 //
-// CARD FUNCTIONS
-//
+//     This file contains all the functions required for the game to run
 //
 
+// Shuffle the cards Array
 function shuffle (array) {
   let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -18,18 +19,21 @@ function shuffle (array) {
   return array;
 }
 
+// Flip and reveal the card on click
 function revealCard(el) {
   el.firstChild.classList.remove('hide');
   el.firstChild.classList.add('revealed');
   el.classList.add('flip');
 }
 
+// Save revealed cards in an array
 function saveCardRevealed(el) {
   cardsRevealed.push(el.firstChild.getAttribute('src'));
   cardsSelected.push(el.firstChild);
   cardsSelected[0].setAttribute('style', 'background: #6aa5da');
 }
 
+// If the 2 revealed cards match, mark them as paired
 function markPaired() {
   const revealedCards = document.querySelectorAll('.revealed');
   for (let card of revealedCards) {
@@ -38,6 +42,7 @@ function markPaired() {
   }
 }
 
+// if the 2 revealed cards dont match, hide them
 function hideRevealedCards() {
   const revealedCards = document.querySelectorAll('.revealed');
   for (let card of revealedCards) {
@@ -47,6 +52,7 @@ function hideRevealedCards() {
   }
 }
 
+// Change the color of the revealed cards to red
 function wrongMove() {
   cardsSelected[0].removeAttribute('style', 'background: #6aa5da');
   const revealedCards = document.querySelectorAll('.revealed');
@@ -55,6 +61,7 @@ function wrongMove() {
   }
 }
 
+// Check if the revealed cards match
 function checkRevealedCards() {
   if (cardsRevealed.length == 2) {
     if (cardsRevealed[0] == cardsRevealed[1]) {
@@ -70,6 +77,7 @@ function checkRevealedCards() {
   }
 }
 
+// Count the user's moves and change the star rating
 function movesCount() {
   const movesNum = document.querySelector('.moves');
   movesNum.textContent = `${moves} Moves`;
@@ -87,6 +95,7 @@ function movesCount() {
   }
 }
 
+// Check if all the cards are flipped
 function checkWin() {
   const pairedCards = document.querySelectorAll('.paired');
   if (pairedCards.length === cards.length) {
@@ -94,6 +103,9 @@ function checkWin() {
     setTimeout(showModal, 1000);
   }
 }
+
+// Show the Modal, with the number of moves, time, and stars.
+// Also, allow the user to restart the game
 function showModal() {
   let message = (minutes === 0) ? `${seconds} seconds` : `${minutes}:${seconds} minutes`;
 
@@ -110,6 +122,7 @@ function showModal() {
   })
 }
 
+// Count up the timer seconds and minutes
 function timer() {
   const timer = document.querySelector('.timer');
   seconds +=1;

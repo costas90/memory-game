@@ -1,3 +1,11 @@
+
+//
+// Summary of File:
+//
+//     This file contains variable declarations and the for loops for placing the cards on
+//     the card grid, and also event listeners.
+//
+
 let icons = [
   'img\/Dump_truck.png',
   'img\/Hacksaw.png',
@@ -60,6 +68,7 @@ cardGrid.appendChild(fragment);
 //
 //
 
+// Listen for card clicks
 cardGrid.addEventListener('click', function(event) {
   if (event.target.classList.contains("revealed") || event.target.classList.contains("paired")) {
     return;
@@ -73,10 +82,12 @@ cardGrid.addEventListener('click', function(event) {
   }
 });
 
+// Listen for clicks on the grid to initiate the timer
 cardGrid.addEventListener('click', function() {
   interval = setInterval(timer, 1000);
 }, options);
 
+// Refresh the browser when the restart icon is clicked
 const restart = document.querySelector('.fa-repeat');
 restart.addEventListener('click', function() {
   document.location.reload();
